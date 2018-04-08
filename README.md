@@ -33,7 +33,7 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 
 ```
 # 6. Join the worker nodes to the cluster
-* After finish step 6, you has been completed setup master node of your kubernetes cluster. To setup other machine to join into your cluster
+* After finish step 5, you has been completed setup master node of your kubernetes cluster. To setup other machine to join into your cluster
 * Prepare your machine as step 1
 Run command kubeadm join with params is the secret key of your kubernetes cluser and your master node ip as STEP 4
 
