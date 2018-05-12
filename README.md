@@ -49,7 +49,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 # 4. Make sure you note down the join token command i.e. 
 
 ```
-kubeadm join 172.31.46.173:6443 --token tw4oxw.wnw97dffmoxkjdg8 --discovery-token-ca-cert-hash sha256:6f0b9f77d03569701f1ce8dfc2ae9753fbc3f31da6f842d---------------
+kubeadm join 10.0.1.133:6443 --token 0daec3.ql0fin8xr87erlc2 --discovery-token-ca-cert-hash sha256:4a52b12b7953f0713c3a4f4f2084cfad9bc003da12180670a46268589eb1a9d5
 
 ```
 # 5. Install networking
