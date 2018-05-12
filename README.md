@@ -9,7 +9,33 @@ curl -sL https://raw.githubusercontent.com/prabhatpankaj/kubernetes-onpremise/ma
 At this point we create the cluster by initiating the master with kubeadm. Only do this on the master node.
 
 ```
-kubeadm init
+ifconfig
+```
+* you should get somthing like this 
+
+```
+eth0      Link encap:Ethernet  HWaddr 02:ac:32:ae:87:20  
+          inet addr:10.0.1.133  Bcast:10.0.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::ac:32ff:feae:8720/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+          RX packets:18309 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1283 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:26423737 (26.4 MB)  TX bytes:161155 (161.1 KB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:192 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:192 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:14456 (14.4 KB)  TX bytes:14456 (14.4 KB)
+```
+* We'll now use the internal IP address to broadcast the Kubernetes API - rather than the Internet-facing address.
+* You must replace --apiserver-advertise-address with the IP of your host.
+```
+kubeadm init --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version stable-1.8
 ```
 # 3. Take a copy of the Kube config:
 
