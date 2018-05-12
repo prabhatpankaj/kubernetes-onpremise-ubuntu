@@ -35,7 +35,7 @@ lo        Link encap:Local Loopback
 * We'll now use the internal IP address to broadcast the Kubernetes API - rather than the Internet-facing address.
 * You must replace --apiserver-advertise-address with the IP of your host.
 ```
-kubeadm init --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version stable-1.8
+kubeadm init --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version stable-1.10
 ```
 # 3. Take a copy of the Kube config:
 
