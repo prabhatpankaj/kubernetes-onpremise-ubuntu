@@ -42,9 +42,9 @@ kubeadm init --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1
 # 3. Configure an unprivileged user-account and Take a copy of the Kube config:
 
 ```
-sudo useradd packet -G sudo -m -s /bin/bash
-sudo passwd packet
-sudo su packet
+sudo useradd kubeuser -G sudo -m -s /bin/bash
+sudo passwd kubeuser
+sudo su kubeuser
 sudo cp /etc/kubernetes/admin.conf $HOME/
 sudo chown $(id -u):$(id -g) $HOME/admin.conf
 export KUBECONFIG=$HOME/admin.conf
