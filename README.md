@@ -1,6 +1,8 @@
 # 1. run this line into your machine console using root permission 
 
 ```
+curl -sL https://raw.githubusercontent.com/prabhatpankaj/ubuntustarter/master/initial.sh | sh
+
 curl -sL https://raw.githubusercontent.com/prabhatpankaj/kubernetes-onpremise/master/configure.sh | sh
 
 ```
