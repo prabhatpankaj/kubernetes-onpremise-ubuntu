@@ -48,7 +48,12 @@ nano /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 ```
 Environment="KUBELET_DNS_ARGS=--cluster-dns=10.96.0.10 --node-ip=10.0.1.133 --cluster-domain=cluster.local"
 ```
+* restart daemon kubelet as
+```
+systemctl daemon-reload
 
+systemctl restart kubelet
+```
 # 4. Configure an unprivileged user-account and Take a copy of the Kube config:
 
 ```
