@@ -39,7 +39,17 @@ lo        Link encap:Local Loopback
 ```
 kubeadm init --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version stable-1.10
 ```
-# 3. Configure an unprivileged user-account and Take a copy of the Kube config:
+# 3. add private ip address before joining any slave nodes 
+* Adding --node-ip=10.0.1.133 to /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+```
+nano /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+```
+* update as 
+```
+Environment="KUBELET_DNS_ARGS=--cluster-dns=10.96.0.10 --node-ip=10.0.1.133 --cluster-domain=cluster.local"
+```
+
+# 4. Configure an unprivileged user-account and Take a copy of the Kube config:
 
 ```
 sudo useradd kubeuser -G sudo -m -s /bin/bash
@@ -52,13 +62,13 @@ echo "export KUBECONFIG=$HOME/admin.conf" | tee -a ~/.bashrc
 
 ```
 
-# 4. Make sure you note down the join token command i.e. 
+# 5. Make sure you note down the join token command i.e. 
 
 ```
 kubeadm join 10.0.1.133:6443 --token 0daec3.ql0fin8xr87erlc2 --discovery-token-ca-cert-hash sha256:4a52b12b7953f0713c3a4f4f2084cfad9bc003da12180670a46268589eb1a9d5
 
 ```
-# 5. Install networking . use Flannel or WeaveWorks
+# 6. Install networking . use Flannel or WeaveWorks
 * Flannel provides a software defined network (SDN) using the Linux kernel's overlay and ipvlan modules.
 
 ```
@@ -72,8 +82,8 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 
 ```
 
-# 6. Join the worker nodes to the cluster
-* After finish step 5, you has been completed setup master node of your kubernetes cluster. To setup other machine to join into your cluster
+# 7. Join the worker nodes to the cluster
+* After finish step 6, you has been completed setup master node of your kubernetes cluster. To setup other machine to join into your cluster
 * Prepare your machine as step 1
 Run command kubeadm join with params is the secret key of your kubernetes cluser and your master node ip as STEP 4
 
