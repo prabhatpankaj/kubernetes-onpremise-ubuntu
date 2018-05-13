@@ -39,12 +39,16 @@ lo        Link encap:Local Loopback
 ```
 kubeadm init --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version stable-1.10
 ```
-# 3. Take a copy of the Kube config:
+# 3. Configure an unprivileged user-account and Take a copy of the Kube config:
 
 ```
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+sudo useradd packet -G sudo -m -s /bin/bash
+sudo passwd packet
+sudo su packet
+sudo cp /etc/kubernetes/admin.conf $HOME/
+sudo chown $(id -u):$(id -g) $HOME/admin.conf
+export KUBECONFIG=$HOME/admin.conf
+echo "export KUBECONFIG=$HOME/admin.conf" | tee -a ~/.bashrc
 
 ```
 
@@ -54,12 +58,20 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubeadm join 10.0.1.133:6443 --token 0daec3.ql0fin8xr87erlc2 --discovery-token-ca-cert-hash sha256:4a52b12b7953f0713c3a4f4f2084cfad9bc003da12180670a46268589eb1a9d5
 
 ```
-# 5. Install networking
+# 5. Install networking . use Flannel or WeaveWorks
+* Flannel provides a software defined network (SDN) using the Linux kernel's overlay and ipvlan modules.
 
+```
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+```
+* Another popular SDN offering is Weave Net by WeaveWorks.
 ```
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
 ```
+
 # 6. Join the worker nodes to the cluster
 * After finish step 5, you has been completed setup master node of your kubernetes cluster. To setup other machine to join into your cluster
 * Prepare your machine as step 1
