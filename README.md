@@ -3,7 +3,7 @@
 ```
 curl -sL https://raw.githubusercontent.com/prabhatpankaj/ubuntustarter/master/initial.sh | sh
 
-curl -sL https://raw.githubusercontent.com/prabhatpankaj/kubernetes-onpremise/master/configure.sh | sh
+curl -sL https://raw.githubusercontent.com/prabhatpankaj/kubernetes-onpremise-ubuntu/master/configure.sh | sh
 
 ```
 # 2. Create the cluster
