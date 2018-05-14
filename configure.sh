@@ -1,5 +1,7 @@
 #!/bin/sh
 
+sudo apt-get install sipcalc
+
 sudo apt-get update \
   && sudo apt-get install -qy docker.io
   
