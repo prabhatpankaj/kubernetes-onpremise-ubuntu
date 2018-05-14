@@ -34,6 +34,28 @@ lo        Link encap:Local Loopback
           collisions:0 txqueuelen:1 
           RX bytes:14456 (14.4 KB)  TX bytes:14456 (14.4 KB)
 ```
+* sipcalc 10.0.1.133/16
+
+```
+-[ipv4 : 10.0.1.133/16] - 0
+
+[CIDR]
+Host address		- 10.0.1.133
+Host address (decimal)	- 2887715554
+Host address (hex)	- AC1F0AE2
+Network address		- 10.1.0.0
+Network mask		- 255.255.0.0
+Network mask (bits)	- 16
+Network mask (hex)	- FFFF0000
+Broadcast address	- 10.31.255.255
+Cisco wildcard		- 0.0.255.255
+Addresses in network	- 65536
+Network range		- 10.1.0.0 - 10.31.255.255
+Usable range		- 10.1.0.1 - 10.31.255.254
+
+-
+
+```
 * We'll now use the internal IP address to broadcast the Kubernetes API - rather than the Internet-facing address.
 * You must replace --apiserver-advertise-address with the IP of your host.
 ```
