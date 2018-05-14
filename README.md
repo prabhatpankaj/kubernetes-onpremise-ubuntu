@@ -59,7 +59,13 @@ Usable range		- 10.1.0.1 - 10.31.255.254
 * We'll now use the internal IP address to broadcast the Kubernetes API - rather than the Internet-facing address.
 * You must replace --apiserver-advertise-address with the IP of your host.
 ```
-kubeadm init --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version stable-1.10
+sed -i '9s/^/Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"\n/' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+
+systemctl daemon-reload
+
+systemctl restart kubelet
+
+kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version stable-1.10
 ```
 # 3. add private ip address before joining any slave nodes 
 * Adding --node-ip=10.0.1.133 to /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
@@ -99,9 +105,10 @@ kubeadm join 10.0.1.133:6443 --token 0daec3.ql0fin8xr87erlc2 --discovery-token-c
 * Flannel provides a software defined network (SDN) using the Linux kernel's overlay and ipvlan modules.
 
 ```
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
 ```
 * Another popular SDN offering is Weave Net by WeaveWorks.
 ```
