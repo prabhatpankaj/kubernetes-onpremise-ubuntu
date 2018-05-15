@@ -121,4 +121,9 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 * Prepare your machine as step 1
 Run command kubeadm join with params is the secret key of your kubernetes cluser and your master node ip as STEP 4
 
+# 8. get cluster
+
+```
+kubectl get all --namespace=kube-system
+```
 
