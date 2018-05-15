@@ -65,7 +65,7 @@ systemctl daemon-reload
 
 systemctl restart kubelet
 
-kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version stable-1.10
+kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version v1.10.0
 ```
 # 3. add private ip address before joining any slave nodes 
 * Adding --node-ip=10.0.1.133 to /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
