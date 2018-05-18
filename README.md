@@ -121,7 +121,14 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 * Prepare your machine as step 1
 Run command kubeadm join with params is the secret key of your kubernetes cluser and your master node ip as STEP 4
 
-# 8. get cluster
+
+# 8. Allow a single-host cluster
+* Kubernetes is about multi-host clustering - so by default containers cannot run on master nodes in the cluster. Since we only have one node - we'll taint it so that it can run containers for us.
+ ```
+ kubectl taint nodes --all node-role.kubernetes.io/master-
+ ```
+
+# 9. get cluster
 
 ```
 kubectl get all --namespace=kube-system
