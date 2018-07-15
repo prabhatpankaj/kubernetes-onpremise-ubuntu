@@ -1,10 +1,16 @@
-# 1. run this line into your machine console using root permission 
+# 1. run this line into your machine console 
 
 ```
 curl -sL https://raw.githubusercontent.com/prabhatpankaj/ubuntustarter/master/initial.sh | sh
 
 curl -sL https://raw.githubusercontent.com/prabhatpankaj/kubernetes-onpremise-ubuntu/master/configure.sh | sh
 
+```
+# 1a. Running Docker without sudo permits Running Docker with sudo all time is not a great idea. We will fix this in this step 
+
+```
+sudo gpasswd -a ${USER} docker
+sudo service docker restart
 ```
 # 2. Create the cluster
 
