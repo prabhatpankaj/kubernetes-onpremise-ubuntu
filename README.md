@@ -9,7 +9,7 @@ curl -sL https://raw.githubusercontent.com/prabhatpankaj/kubernetes-onpremise-ub
 # 1a. Running Docker without sudo permits Running Docker with sudo all time is not a great idea. We will fix this in this step 
 
 ```
-sudo gpasswd -a ${USER} docker
+sudo usermod -aG docker ${USER}
 sudo service docker restart
 ```
 # 2. Create the cluster
