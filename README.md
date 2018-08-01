@@ -6,13 +6,13 @@ curl -sL https://raw.githubusercontent.com/prabhatpankaj/ubuntustarter/master/in
 curl -sL https://raw.githubusercontent.com/prabhatpankaj/kubernetes-onpremise-ubuntu/master/configure.sh | sh
 
 ```
-# 1a. Running Docker without sudo permits Running Docker with sudo all time is not a great idea. We will fix this in this step 
+# 2. Running Docker without sudo permits Running Docker with sudo all time is not a great idea. We will fix this in this step 
 
 ```
 sudo usermod -aG docker ${USER}
 sudo service docker restart
 ```
-# 2. Create the cluster
+# 3. Create the cluster
 
 At this point we create the cluster by initiating the master with kubeadm. Only do this on the master node.
 
@@ -73,17 +73,7 @@ systemctl restart kubelet
 
 kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version v1.11.1
 ```
-# 3. add private ip address before joining any slave nodes 
-* Adding --node-ip=10.0.1.133 to /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-```
-nano /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-```
-* restart daemon kubelet as
-```
-systemctl daemon-reload
 
-systemctl restart kubelet
-```
 # 4. Configure an unprivileged user-account and Take a copy of the Kube config:
 
 ```
