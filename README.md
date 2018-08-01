@@ -78,10 +78,6 @@ kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=10.0.0.0/16 --api
 ```
 nano /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 ```
-* update as 
-```
-Environment="KUBELET_DNS_ARGS=--cluster-dns=10.96.0.10 --node-ip=10.0.1.133 --cluster-domain=cluster.local"
-```
 * restart daemon kubelet as
 ```
 systemctl daemon-reload
