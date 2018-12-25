@@ -10,7 +10,10 @@ curl -sL https://raw.githubusercontent.com/prabhatpankaj/kubernetes-onpremise-ub
 
 ```
 sudo usermod -aG docker ${USER}
+newgrp docker
 sudo service docker restart
+
+sudo systemctl enable docker.service
 ```
 # 3. Create the cluster
 
@@ -22,42 +25,33 @@ ifconfig
 * you should get somthing like this 
 
 ```
-eth0      Link encap:Ethernet  HWaddr 02:ac:32:ae:87:20  
-          inet addr:10.0.1.133  Bcast:10.0.1.255  Mask:255.255.255.0
-          inet6 addr: fe80::ac:32ff:feae:8720/64 Scope:Link
-          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
-          RX packets:18309 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:1283 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000 
-          RX bytes:26423737 (26.4 MB)  TX bytes:161155 (161.1 KB)
-
-lo        Link encap:Local Loopback  
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          inet6 addr: ::1/128 Scope:Host
-          UP LOOPBACK RUNNING  MTU:65536  Metric:1
-          RX packets:192 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:192 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1 
-          RX bytes:14456 (14.4 KB)  TX bytes:14456 (14.4 KB)
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
+        inet 172.31.63.19  netmask 255.255.240.0  broadcast 172.31.63.255
+        inet6 fe80::10f2:f3ff:fe0a:b86e  prefixlen 64  scopeid 0x20<link>
+        ether 12:f2:f3:0a:b8:6e  txqueuelen 1000  (Ethernet)
+        RX packets 80837  bytes 117959539 (117.9 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4168  bytes 413343 (413.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
-* sipcalc 10.0.1.133/16
+* sipcalc 172.31.63.19/16
 
 ```
--[ipv4 : 10.0.1.133/16] - 0
+-[ipv4 : 172.31.63.19/16] - 0
 
 [CIDR]
-Host address		- 10.0.1.133
-Host address (decimal)	- 2887715554
-Host address (hex)	- AC1F0AE2
-Network address		- 10.1.0.0
+Host address		- 172.31.63.19
+Host address (decimal)	- 2887728915
+Host address (hex)	- AC1F3F13
+Network address		- 172.31.0.0
 Network mask		- 255.255.0.0
 Network mask (bits)	- 16
 Network mask (hex)	- FFFF0000
-Broadcast address	- 10.31.255.255
+Broadcast address	- 172.31.255.255
 Cisco wildcard		- 0.0.255.255
 Addresses in network	- 65536
-Network range		- 10.1.0.0 - 10.31.255.255
-Usable range		- 10.1.0.1 - 10.31.255.254
+Network range		- 172.31.0.0 - 172.31.255.255
+Usable range		- 172.31.0.1 - 172.31.255.254
 
 -
 
@@ -65,13 +59,15 @@ Usable range		- 10.1.0.1 - 10.31.255.254
 * We'll now use the internal IP address to broadcast the Kubernetes API - rather than the Internet-facing address.
 * You must replace --apiserver-advertise-address with the IP of your host.
 ```
+sudo su
+
 sed -i '9s/^/Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"\n/' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 
 systemctl daemon-reload
 
 systemctl restart kubelet
 
-kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=10.0.0.0/16 --apiserver-advertise-address=10.0.1.133 --kubernetes-version v1.11.1
+kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=172.31.0.0/16 --apiserver-advertise-address=172.31.63.19 --kubernetes-version v1.13.0
 ```
 
 # 4. Configure an unprivileged user-account and Take a copy of the Kube config:
