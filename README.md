@@ -82,6 +82,10 @@ sudo chown $(id -u):$(id -g) $HOME/admin.conf
 export KUBECONFIG=$HOME/admin.conf
 echo "export KUBECONFIG=$HOME/admin.conf" | tee -a ~/.bashrc
 
+sudo usermod -aG docker ${USER}
+newgrp docker
+sudo service docker restart
+
 ```
 
 # 5. Make sure you note down the join token command i.e. 
