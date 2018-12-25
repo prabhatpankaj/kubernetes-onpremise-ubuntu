@@ -76,6 +76,7 @@ kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=172.31.0.0/16 --a
 sudo useradd kubeuser -G sudo -m -s /bin/bash
 sudo passwd kubeuser
 sudo su kubeuser
+cd $HOME
 sudo cp /etc/kubernetes/admin.conf $HOME/
 sudo chown $(id -u):$(id -g) $HOME/admin.conf
 export KUBECONFIG=$HOME/admin.conf
