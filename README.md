@@ -67,7 +67,7 @@ systemctl daemon-reload
 
 systemctl restart kubelet
 
-kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=172.31.0.0/16 --apiserver-advertise-address=172.31.63.19 --kubernetes-version v1.13.0
+kubeadm init --ignore-preflight-errors Swap --pod-network-cidr=172.31.0.0/16 --apiserver-advertise-address=172.31.63.19 --kubernetes-version v1.14.0
 ```
 
 # 4. Configure an unprivileged user-account and Take a copy of the Kube config:
